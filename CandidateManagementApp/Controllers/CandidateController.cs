@@ -180,12 +180,5 @@ namespace CandidateManagementApp.Controllers
             // Used for partial view to add a new qualification
             return PartialView(new Qualification());
         }
-
-        [HttpGet]
-        public IActionResult DeleteQualification(int ID)
-        {
-            
-            return RedirectToAction("Edit");
-        }
     }
 }
