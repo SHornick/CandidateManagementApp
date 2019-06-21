@@ -142,7 +142,7 @@ namespace CandidateManagementApp.Controllers
             {
                 if (!string.IsNullOrEmpty(candidate.SearchQualification.Name))
                 {
-                    qualifications = qualifications.Where(x => x.Name == candidate.SearchQualification.Name);
+                    qualifications = qualifications.Where(x => x.Name.Contains(candidate.SearchQualification.Name));
                 }
                 if (candidate.SearchQualification.DateStarted != null)
                 {
