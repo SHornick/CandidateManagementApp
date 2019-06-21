@@ -1,0 +1,128 @@
+﻿@model CandidateManagementApp.Models.CandidateSearch
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h1>Search</h1>
+<h4>Candidate Information</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Search" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailAddress" class="control-label"></label>
+                <input asp-for="EmailAddress" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="ZipCode" class="control-label"></label>
+                <input asp-for="ZipCode" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="AnyQualificationTypeFlag" class="control-label"></label>
+                <input asp-for="AnyQualificationTypeFlag" class="form-check" />
+            </div>
+            <div class="form-group">
+                <label asp-for="SearchQualification.QualificationType" class="control-label"></label>
+                <select asp-for="SearchQualification.QualificationType" asp-items="Html.GetEnumSelectList<QualificationType>()" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="SearchQualification.Name" class="control-label"></label>
+                <input asp-for="SearchQualification.Name" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="SearchQualification.DateStarted" class="control-label"></label>
+                <input asp-for="SearchQualification.DateStarted" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="SearchQualification.DateCompleted" class="control-label"></label>
+                <input asp-for="SearchQualification.DateCompleted" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Search" class="btn btn-dark" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (Model != null && Model.FilteredCandidates.Count > 0)
+{
+    <h2>Candidate Search Results:</h2>
+
+    <table class="table table-bordered table-light table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmailAddress)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ZipCode)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.FilteredCandidates)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmailAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ZipCode)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ID"><input class="btn btn-dark" type='button' value='Edit' /></a>
+                        <form asp-action="Delete">
+                            <input type="hidden" value="@item.ID" name="id" />
+                            <input class="btn btn-dark" type="submit" value="Delete" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+
